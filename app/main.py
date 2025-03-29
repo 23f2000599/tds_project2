@@ -124,9 +124,10 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get('/health')
+@app.get("/health")
 async def health():
     return {"status": "ok"}
+
 
 # from fastapi import FastAPI, UploadFile, File, Form
 # from app.utils.file_handler import process_file
