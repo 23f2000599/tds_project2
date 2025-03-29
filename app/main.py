@@ -84,6 +84,9 @@ from pydantic import BaseModel
 from fastapi import UploadFile, File, Form
 
 app = FastAPI()
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
 
 class QuestionRequest(BaseModel):
     question: str
