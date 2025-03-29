@@ -76,47 +76,57 @@
 #             return {"error": f"LLM processing failed: {str(e)}"}
 
 #     return {"answer": answer}
+#-------------------------
+# from fastapi import FastAPI
+# from app.utils.file_handler import process_file
+# from app.utils.functions import execute_question
+# from app.utils.openai_client import get_openai_response
+# from pydantic import BaseModel
+# from fastapi import UploadFile, File, Form
+
+# app = FastAPI()
+# @app.get("/")
+# async def read_root():
+#     return {"message": "Welcome to the API"}
+
+# @app.get("/health")
+# async def health_check():
+#     return {"status": "ok"}
+
+# class QuestionRequest(BaseModel):
+#     question: str
+
+
+# @app.post("/api/")
+# async def answer_question(question: str = Form(...), file: UploadFile = File(None)):
+#     answer = ""
+
+#     # Execute predefined question logic
+#     predefined_answer = execute_question(question)
+#     if predefined_answer:
+#         answer = predefined_answer
+
+#     # Process uploaded file
+#     if file:
+#         file_answer = await process_file(file)
+#         if isinstance(file_answer, dict) and "error" in file_answer:
+#             return file_answer
+#         answer = file_answer if not answer else answer + "\n" + file_answer
+
+#     # Use OpenAI API if no predefined answer exists
+#     if not answer:
+#         answer = get_openai_response(question)
+
+#     return {"answer": answer}
+
+#------------------------------------------
 from fastapi import FastAPI
-from app.utils.file_handler import process_file
-from app.utils.functions import execute_question
-from app.utils.openai_client import get_openai_response
-from pydantic import BaseModel
-from fastapi import UploadFile, File, Form
 
 app = FastAPI()
-@app.get("/")
-async def read_root():
-    return {"message": "Welcome to the API"}
 
 @app.get("/health")
-async def health_check():
+async def health():
     return {"status": "ok"}
-
-class QuestionRequest(BaseModel):
-    question: str
-
-
-@app.post("/api/")
-async def answer_question(question: str = Form(...), file: UploadFile = File(None)):
-    answer = ""
-
-    # Execute predefined question logic
-    predefined_answer = execute_question(question)
-    if predefined_answer:
-        answer = predefined_answer
-
-    # Process uploaded file
-    if file:
-        file_answer = await process_file(file)
-        if isinstance(file_answer, dict) and "error" in file_answer:
-            return file_answer
-        answer = file_answer if not answer else answer + "\n" + file_answer
-
-    # Use OpenAI API if no predefined answer exists
-    if not answer:
-        answer = get_openai_response(question)
-
-    return {"answer": answer}
 
 # from fastapi import FastAPI, UploadFile, File, Form
 # from app.utils.file_handler import process_file
